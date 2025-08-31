@@ -80,4 +80,9 @@ public class CategoryDao {
             throw e;
         }
     }
+
+    public List<Category> findAll() {
+        return entityManager.createQuery("SELECT c FROM Category c", Category.class)
+                .getResultList();
+    }
 }

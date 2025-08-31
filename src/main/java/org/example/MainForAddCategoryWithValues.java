@@ -2,7 +2,6 @@ package org.example;
 
 import jakarta.persistence.*;
 import org.example.dao.CategoryDao;
-import org.example.model.Category;
 import org.example.service.CategoryService;
 
 import java.util.Arrays;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Main {
+public class MainForAddCategoryWithValues {
     public static void main(String[] args) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager em = factory.createEntityManager();

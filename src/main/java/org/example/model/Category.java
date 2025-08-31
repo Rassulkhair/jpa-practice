@@ -19,7 +19,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Product> productList;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Option> optionList;
 
 }

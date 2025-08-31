@@ -20,6 +20,6 @@ public class Option {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "option")
+    @OneToMany(mappedBy = "option", cascade = CascadeType.ALL)
     private List<Value> valueList;
 }

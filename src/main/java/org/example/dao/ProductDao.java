@@ -2,7 +2,6 @@ package org.example.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.example.model.Category;
 import org.example.model.Product;
 
 import java.util.List;
@@ -83,5 +82,11 @@ public class ProductDao {
         );
         query.setParameter("id", id);
         return query.getSingleResult();
+    }
+
+    public List<Product> findByCategoryId(Long categoryId) {
+        return entityManager.createQuery(
+                "SELECT p FROM Product p WHERE p.category.id = :categoryId", Product.class
+        ).setParameter("categoryId", categoryId).getResultList();
     }
 }

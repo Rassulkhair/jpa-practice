@@ -3,6 +3,7 @@ package org.example.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.example.model.Category;
+import org.example.model.Option;
 
 import java.util.List;
 
@@ -54,11 +55,29 @@ public class CategoryDao {
         }
 
     }
-    public List<Category> findByName(String name){
+
+    public List<Category> findByName(String name) {
         TypedQuery<Category> query = entityManager.createQuery(
                 "SELECT c FROM Category c WHERE c.name = :name", Category.class
         );
         query.setParameter("name", name);
         return query.getResultList();
+    }
+
+    public void addOptions(Category category, List<String> optionList) {
+        try {
+            entityManager.getTransaction().begin();
+            for (String optionName : optionList) {
+                Option option = new Option();
+                option.setName(optionName);
+                option.setCategory(category);
+                entityManager.persist(option);
+            }
+            entityManager.getTransaction().commit();
+
+        } catch (RuntimeException e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        }
     }
 }

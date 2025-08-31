@@ -5,7 +5,9 @@ import org.example.dao.CategoryDao;
 import org.example.model.Category;
 import org.example.service.CategoryService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Main {
@@ -16,33 +18,18 @@ public class Main {
         CategoryDao categoryDao = new CategoryDao(em);
         CategoryService categoryService = new CategoryService(categoryDao);
 
-        System.out.println("-----CREATE------");
-        categoryService.createCategory("Наушники");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("-----FIND------");
-        Category category1 = categoryService.findById(3L);
-        System.out.println("Найдена категория: " + category1.getName() + "Id: " + category1.getId());
+        System.out.println("-----Введите название категории------");
+        String categoryName = scanner.nextLine();
 
+        System.out.print("Введите названия характеристик (через запятую и пробел): ");
+        String optionInput = scanner.nextLine();
+        List<String> options = Arrays.stream(optionInput.split(","))
+                .map(String::trim)
+                .toList();
 
-        System.out.println("-----UPDATE------");
-        category1.setName("Наушники и гарнитура");
-        categoryService.update(category1);
-        Category updated = categoryService.findById(3L);
-        System.out.println("После обновления: " + updated.getName());
-
-
-        System.out.println("----FIND BY NAME------");
-        List<Category> categories = categoryService.findByName("Наушники и гарнитура");
-        for (Category c : categories) {
-            System.out.println("Найдена категория: " + c.getId() + " - " + c.getName());
-        }
-
-        System.out.println("-----DELETE------");
-        categoryService.deleteById(3L);
-        Category deleted = categoryService.findById(3L);
-        System.out.println();
-        System.out.println("После удаления (должно быть null): " + deleted);
-
+        categoryService.createCategoryWithOptions(categoryName, options);
 
         em.close();
         factory.close();

@@ -22,6 +22,4 @@ public class Option {
 
     @OneToMany(mappedBy = "option")
     private List<Value> valueList;
-
-
 }

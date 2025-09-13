@@ -23,4 +23,11 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Value> valueList;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems;
+
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 }
